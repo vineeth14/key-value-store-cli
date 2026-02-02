@@ -1,0 +1,4 @@
+PUT|testkey|testvalue
+PUT|testkey2|testvalue2
+PUT|testkey2|testvalue3
+PUT|testkey4|testvalue4
