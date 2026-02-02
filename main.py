@@ -2,18 +2,18 @@ import argparse
 from handlers.put import put_handler
 from handlers.get import get_handler
 from handlers.delete import del_handler
+import traceback
 
-from hash_index_store import get_index_store, load_index_store
+from hash_index_store import IndexStore
 
 
 def main():
     try:
-        _index_store = get_index_store()
+        index_store = IndexStore()
 
-        if not _index_store:
-            load_index_store()
+        if not index_store.get_index_store():
+            index_store.load_index_store()
 
-        print(_index_store)
         parser = argparse.ArgumentParser()
 
         subparser = parser.add_subparsers(dest="subcommand")
@@ -28,8 +28,10 @@ def main():
         args = parser.parse_args()
 
         commands = {
-            "put": lambda: put_handler(key=args.key, value=args.value),
-            "get": lambda: get_handler(key=args.key),
+            "put": lambda: put_handler(
+                index_store=index_store, key=args.key, value=args.value
+            ),
+            "get": lambda: get_handler(index_store=index_store, key=args.key),
         }
 
         command_func = commands.get(args.subcommand)
@@ -39,7 +41,7 @@ def main():
         else:
             parser.print_help()
     except Exception as e:
-        print("error", e)
+        print(traceback.format_exc())
 
 
 if __name__ == "__main__":
