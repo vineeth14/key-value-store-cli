@@ -1,12 +1,16 @@
 from utils import get_filepath
+from hash_index_store import get_index_store
 
 
 def get_handler(key: str):
     filepath = get_filepath("append_log.txt")
+    _index_store = get_index_store()
 
-    with open(filepath) as file:
-        for line in file.readlines()[::-1]:
-            line = line.split("|")
-            if line[1] == key:
-                return line[2]
-    return "key does not exist"
+    if key in _index_store:
+        offset = _index_store[key]
+    else:
+        return "key  not found"
+
+    with open(filepath, "r") as file:
+        file.seek(offset)
+        return file.readline()

@@ -3,9 +3,17 @@ from handlers.put import put_handler
 from handlers.get import get_handler
 from handlers.delete import del_handler
 
+from hash_index_store import get_index_store, load_index_store
+
 
 def main():
     try:
+        _index_store = get_index_store()
+
+        if not _index_store:
+            load_index_store()
+
+        print(_index_store)
         parser = argparse.ArgumentParser()
 
         subparser = parser.add_subparsers(dest="subcommand")
