@@ -44,9 +44,13 @@ class IndexStore:
             for line in f:
                 line_list = line.split("|")
                 key = line_list[1]
+                if key == "DEL":
+                    continue
 
-                string_offset = utf8len(line_list[0] + "|" + line_list[1] + "|")
+                else:
+                    string_offset = utf8len(line_list[0] + "|" + line_list[1] + "|")
 
-                self.update_index_store(key, string_offset + bytes_offset)
-                bytes_offset += utf8len(line)
+                    self.update_index_store(key, string_offset + bytes_offset)
+                    bytes_offset += utf8len(line)
         self._save_to_disk()
+

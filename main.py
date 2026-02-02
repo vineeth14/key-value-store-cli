@@ -25,6 +25,9 @@ def main():
         get_subparser = subparser.add_parser(name="get", help="get command")
         get_subparser.add_argument("key")
 
+        del_subparser = subparser.add_parser(name="del", help="del command")
+        get_subparser.add_argument("key")
+
         args = parser.parse_args()
 
         commands = {
@@ -32,6 +35,7 @@ def main():
                 index_store=index_store, key=args.key, value=args.value
             ),
             "get": lambda: get_handler(index_store=index_store, key=args.key),
+            "del": lambda: del_handler(index_store=index_store, key=args.key),
         }
 
         command_func = commands.get(args.subcommand)
