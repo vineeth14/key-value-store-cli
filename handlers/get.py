@@ -1,8 +1,9 @@
 from utils import get_filepath
 from hash_index_store import IndexStore
+from typing import List
 
 
-def get_handler(index_store: IndexStore, key: str):
+def get_handler(index_store: IndexStore, key: str) -> -List[str]:
     filepath = get_filepath("append_log.txt")
     _index_store = index_store.get_index_store()
 

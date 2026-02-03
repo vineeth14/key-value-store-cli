@@ -2,7 +2,7 @@ from utils import get_filepath, utf8len
 import os
 from pathlib import Path
 import json
-
+from typing import Any
 
 INDEX_FILE = Path.home() / ".my_index.json"
 
@@ -11,7 +11,7 @@ class IndexStore:
     def __init__(self):
         self.data = self.__load_from_disk()
 
-    def __load_from_disk(self):
+    def __load_from_disk(self) -> Any | dict[str, int]:
         if INDEX_FILE.exists():
             with open(INDEX_FILE) as f:
                 return json.load(f)
@@ -53,4 +53,3 @@ class IndexStore:
                     self.update_index_store(key, string_offset + bytes_offset)
                     bytes_offset += utf8len(line)
         self._save_to_disk()
-

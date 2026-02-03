@@ -26,7 +26,7 @@ def main():
         get_subparser.add_argument("key")
 
         del_subparser = subparser.add_parser(name="del", help="del command")
-        get_subparser.add_argument("key")
+        del_subparser.add_argument("key")
 
         args = parser.parse_args()
 
@@ -44,7 +44,7 @@ def main():
             print(command_func())
         else:
             parser.print_help()
-    except Exception as e:
+    except Exception:
         print(traceback.format_exc())
 
 
